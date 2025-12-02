@@ -1,0 +1,23 @@
+---
+import { filmService } from '@/lib/api/services/filmService';
+
+let data;
+let error;
+
+try {
+  console.log('Testing API in test-api.astro');
+  data = await filmService.getHotFilms();
+  console.log('API Success');
+} catch (e) {
+  console.log('API Error:', e);
+  error = e;
+}
+---
+
+<html>
+  <body>
+    <h1>Test API</h1>
+    {error && <p>Error: {error.message}</p>}
+    {data && <p>Success: {data.length} films found</p>}
+  </body>
+</html>

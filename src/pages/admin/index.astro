@@ -1,0 +1,71 @@
+---
+import AdminLayout from '@/layouts/AdminLayout.astro';
+
+const stats = [
+  { label: 'Total Movies', value: '1,234', change: '+12%', color: 'text-primary-400' },
+  { label: 'Total Users', value: '56.2k', change: '+5%', color: 'text-secondary-400' },
+  { label: 'Active Crawlers', value: '3', change: 'Running', color: 'text-success' },
+  { label: 'Storage Used', value: '45%', change: '2.1TB', color: 'text-warning' },
+];
+---
+
+<AdminLayout title="Dashboard">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    {
+      stats.map((stat) => (
+        <div class="glass p-6 rounded-2xl">
+          <h3 class="text-text-secondary text-sm font-medium mb-2">{stat.label}</h3>
+          <div class="flex items-end justify-between">
+            <span class="text-3xl font-bold text-white">{stat.value}</span>
+            <span class={`text-sm font-medium ${stat.color}`}>{stat.change}</span>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Recent Activity -->
+    <div class="glass p-6 rounded-2xl">
+      <h3 class="text-lg font-bold text-white mb-4">Recent Activity</h3>
+      <div class="space-y-4">
+        {
+          [1, 2, 3, 4, 5].map((i) => (
+            <div class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors">
+              <div class="w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center text-xs text-text-secondary">
+                LOG
+              </div>
+              <div class="flex-1">
+                <p class="text-sm text-white font-medium">Updated movie "Inception"</p>
+                <p class="text-xs text-text-secondary">2 minutes ago</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- System Status -->
+    <div class="glass p-6 rounded-2xl">
+      <h3 class="text-lg font-bold text-white mb-4">System Status</h3>
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="text-text-secondary">CPU Usage</span>
+          <div class="w-48 h-2 bg-neutral-800 rounded-full overflow-hidden">
+            <div class="h-full bg-primary-500 w-[45%]"></div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-text-secondary">Memory</span>
+          <div class="w-48 h-2 bg-neutral-800 rounded-full overflow-hidden">
+            <div class="h-full bg-secondary-500 w-[60%]"></div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-text-secondary">API Latency</span>
+          <span class="text-success font-medium">45ms</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</AdminLayout>

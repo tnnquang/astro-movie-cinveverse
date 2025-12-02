@@ -1,0 +1,95 @@
+---
+export const prerender = false;
+
+import MainLayout from '@/layouts/MainLayout.astro';
+import { filmService } from '@/lib/api/services/filmService';
+import { MovieGrid } from '@/components/movie/MovieGrid';
+import { Pagination } from '@/components/ui/Pagination';
+
+const { year } = Astro.params;
+const url = new URL(Astro.request.url);
+const lastId = url.searchParams.get('lastId');
+const lastView = url.searchParams.get('lastView');
+const lastCreatedAt = url.searchParams.get('lastCreatedAt');
+const firstId = url.searchParams.get('firstId');
+const firstView = url.searchParams.get('firstView');
+const firstCreatedAt = url.searchParams.get('firstCreatedAt');
+
+if (!year) {
+  return Astro.redirect('/404');
+}
+
+import type { Film, PaginationCursor } from '@/types/film';
+
+const yearNum = parseInt(year);
+
+let films: Film[] = [];
+let nextCursor: PaginationCursor | undefined | null = null;
+let error = null;
+
+try {
+  const params = {
+    limit: 24,
+    ...(lastId && {
+      lastId,
+      lastView: Number(lastView),
+      lastCreatedAt: lastCreatedAt || undefined,
+    }),
+    ...(firstId && {
+      firstId,
+      firstView: Number(firstView),
+      firstCreatedAt: firstCreatedAt || undefined,
+    }),
+  };
+
+  const data = await filmService.getFilmsByYear(yearNum, params);
+  films = data.data || [];
+  nextCursor = data.nextCursor;
+} catch (e) {
+  error = e;
+  console.error('Error fetching films:', e);
+}
+
+const getNextLink = () => {
+  if (!nextCursor) return undefined;
+  const params = new URLSearchParams();
+  params.set('lastId', nextCursor.id);
+  params.set('lastView', nextCursor.view.toString());
+  params.set('lastCreatedAt', nextCursor.createdAt);
+  return `?${params.toString()}`;
+};
+
+const getPrevLink = () => {
+  if (lastId || firstId) return `/nam/${year}`;
+  return undefined;
+};
+---
+
+<MainLayout title={`Phim ${year} - CineVerse`} description={`Danh sách phim năm ${year}`}>
+  <div class="container-custom py-12">
+    <div class="mb-8">
+      <h1 class="heading-2 mb-2">Phim Năm {year}</h1>
+      <p class="text-text-secondary">Những bộ phim ra mắt năm {year}</p>
+    </div>
+
+    {
+      error ? (
+        <div class="text-center py-12">
+          <p class="text-text-muted">Không thể tải danh sách phim. Vui lòng thử lại sau.</p>
+        </div>
+      ) : (
+        <>
+          <MovieGrid movies={films} client:only="react" />
+
+          <Pagination
+            hasPrevPage={!!(lastId || firstId)}
+            hasNextPage={!!nextCursor}
+            prevLink={getPrevLink()}
+            nextLink={getNextLink()}
+            className="mt-16"
+          />
+        </>
+      )
+    }
+  </div>
+</MainLayout>

@@ -1,0 +1,125 @@
+---
+export const prerender = false;
+
+import MainLayout from '@/layouts/MainLayout.astro';
+import { filmService } from '@/lib/api/services/filmService';
+import { metadataService } from '@/lib/api/services/metadataService';
+import { MovieGrid } from '@/components/movie/MovieGrid';
+import { Pagination } from '@/components/ui/Pagination';
+
+const { slug } = Astro.params;
+const url = new URL(Astro.request.url);
+const lastId = url.searchParams.get('lastId');
+const lastView = url.searchParams.get('lastView');
+const lastCreatedAt = url.searchParams.get('lastCreatedAt');
+const firstId = url.searchParams.get('firstId');
+const firstView = url.searchParams.get('firstView');
+const firstCreatedAt = url.searchParams.get('firstCreatedAt');
+
+if (!slug) {
+  return Astro.redirect('/404');
+}
+
+import type { Film, PaginationCursor } from '@/types/film';
+
+// ...
+
+let films: Film[] = [];
+let categoryName = slug;
+let nextCursor: PaginationCursor | undefined | null = null;
+let error = null;
+
+try {
+  // Get category name
+  const categoriesData = await metadataService.getCategories();
+  const category = categoriesData?.find((c) => c.slug === slug);
+  if (category) {
+    categoryName = category.name;
+  }
+
+  const params = {
+    limit: 24,
+    ...(lastId && {
+      lastId,
+      lastView: Number(lastView),
+      lastCreatedAt: lastCreatedAt || undefined,
+    }),
+    ...(firstId && {
+      firstId,
+      firstView: Number(firstView),
+      firstCreatedAt: firstCreatedAt || undefined,
+    }),
+  };
+
+  // Get films
+  const data = await filmService.getFilmsByCategory(slug, params);
+  films = data.data || [];
+  nextCursor = data.nextCursor;
+} catch (e) {
+  error = e;
+  console.error('Error fetching films:', e);
+}
+
+const getNextLink = () => {
+  if (!nextCursor) return undefined;
+  const params = new URLSearchParams();
+  params.set('lastId', nextCursor.id);
+  params.set('lastView', nextCursor.view.toString());
+  params.set('lastCreatedAt', nextCursor.createdAt);
+  return `?${params.toString()}`;
+};
+
+const getPrevLink = () => {
+  if (lastId || firstId) return `/the-loai/${slug}`;
+  return undefined;
+};
+---
+
+<MainLayout
+  title={`${categoryName} - CineVerse`}
+  description={`Danh sách phim thể loại ${categoryName}`}
+>
+  <div class="container-custom py-12">
+    <div class="relative mb-12 p-8 rounded-3xl overflow-hidden">
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-primary-900/40 to-secondary-900/40 border border-white/5 backdrop-blur-xl"
+      >
+      </div>
+      <div class="absolute inset-0 bg-[url('/images/noise.png')] opacity-10 mix-blend-overlay">
+      </div>
+
+      <div class="relative z-10 flex flex-col items-center text-center">
+        <h1
+          class="heading-2 mb-3 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/80"
+        >
+          {categoryName}
+        </h1>
+        <p class="text-lg text-text-secondary max-w-2xl">
+          Tuyển tập những bộ phim {categoryName} hay nhất được cập nhật liên tục.
+        </p>
+      </div>
+    </div>
+
+    {
+      error ? (
+        <div class="text-center py-20 glass rounded-2xl border border-red-500/20 bg-red-500/5">
+          <p class="text-red-400 text-lg font-medium">
+            Không thể tải danh sách phim. Vui lòng thử lại sau.
+          </p>
+        </div>
+      ) : (
+        <>
+          <MovieGrid movies={films} client:only="react" />
+
+          <Pagination
+            hasPrevPage={!!(lastId || firstId)}
+            hasNextPage={!!nextCursor}
+            prevLink={getPrevLink()}
+            nextLink={getNextLink()}
+            className="mt-16"
+          />
+        </>
+      )
+    }
+  </div>
+</MainLayout>

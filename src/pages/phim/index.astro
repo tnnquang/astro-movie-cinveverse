@@ -1,0 +1,68 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import { filmService } from '@/lib/api/services/filmService';
+import { MovieGrid } from '@/components/movie/MovieGrid';
+
+const url = new URL(Astro.request.url);
+const page = parseInt(url.searchParams.get('page') || '1');
+const limit = 24;
+
+import type { Film } from '@/types/film';
+
+let films: Film[] = [];
+let error = null;
+let hasMore = false;
+
+try {
+  const data = await filmService.getFilms({ limit });
+  films = data.data || [];
+  hasMore = data.nextCursor ? true : false;
+} catch (e) {
+  error = e;
+  console.error('Error fetching films:', e);
+}
+---
+
+<MainLayout
+  title="Tất Cả Phim - CineVerse"
+  description="Khám phá thư viện phim đầy đủ của CineVerse"
+>
+  <div class="container-custom py-12">
+    <h1 class="heading-2 mb-8">Tất Cả Phim</h1>
+
+    {
+      error ? (
+        <div class="text-center py-12">
+          <p class="text-text-muted">Không thể tải danh sách phim. Vui lòng thử lại sau.</p>
+        </div>
+      ) : (
+        <>
+          <MovieGrid movies={films} client:only="react" />
+
+          {/* Pagination */}
+          {(page > 1 || hasMore) && (
+            <div class="flex justify-center gap-4 mt-12">
+              {page > 1 && (
+                <a
+                  href={`/phim?page=${page - 1}`}
+                  class="px-6 py-3 bg-neutral-800 hover:bg-neutral-700 rounded-lg transition-colors"
+                >
+                  ← Trang trước
+                </a>
+              )}
+              <span class="px-6 py-3 bg-primary-600 rounded-lg">Trang {page}</span>
+              {hasMore && (
+                <a
+                  href={`/phim?page=${page + 1}`}
+                  class="px-6 py-3 bg-neutral-800 hover:bg-neutral-700 rounded-lg transition-colors"
+                >
+                  Trang sau →
+                </a>
+              )}
+            </div>
+          )}
+        </>
+      )
+    }
+  </div>
+</MainLayout>

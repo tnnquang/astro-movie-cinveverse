@@ -1,0 +1,62 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+---
+
+<MainLayout title="Lịch Sử Xem - CineVerse">
+  <div class="container-custom py-12">
+    <h1 class="heading-2 mb-8">Lịch Sử Xem</h1>
+
+    <div id="history-content" class="min-h-[400px]">
+      <p class="text-text-secondary">Đang tải...</p>
+    </div>
+  </div>
+</MainLayout>
+
+<script>
+  import { $watchHistory } from '@/stores/history';
+
+  const container = document.getElementById('history-content');
+  if (container) {
+    const items = $watchHistory.get();
+
+    if (items.length === 0) {
+      container.innerHTML = `
+        <div class="text-center py-12">
+          <svg class="mx-auto h-16 w-16 text-text-muted mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <h3 class="text-lg font-semibold mb-2">Chưa có lịch sử xem</h3>
+          <p class="text-text-muted">Bắt đầu xem phim để theo dõi lịch sử</p>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="space-y-4">
+          ${items
+            .map(
+              (item) => `
+            <a href="/phim/${item.slug}" class="flex gap-4 bg-neutral-900 rounded-xl p-4 hover:bg-neutral-800 transition-colors">
+              <img src="${item.poster_url}" alt="${item.name}" class="w-24 aspect-[2/3] object-cover rounded-lg" />
+              <div class="flex-1">
+                <h3 class="font-semibold mb-2">${item.name}</h3>
+                ${item.episode ? `<p class="text-sm text-text-secondary mb-1">Tập: ${item.episode}</p>` : ''}
+                ${
+                  item.progress
+                    ? `
+                  <div class="w-full bg-neutral-700 rounded-full h-2 mb-2">
+                    <div class="bg-primary-600 h-2 rounded-full" style="width: ${item.progress}%"></div>
+                  </div>
+                `
+                    : ''
+                }
+                <p class="text-xs text-text-muted">Xem lần cuối: ${new Date(item.watchedAt).toLocaleDateString('vi-VN')}</p>
+              </div>
+            </a>
+          `
+            )
+            .join('')}
+        </div>
+      `;
+    }
+  }
+</script>

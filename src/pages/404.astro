@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 - Không Tìm Thấy Trang">
+  <div class="min-h-screen flex items-center justify-center px-4">
+    <div class="text-center">
+      <h1 class="text-9xl font-display font-bold text-primary-500 mb-4">404</h1>
+      <h2 class="heading-3 mb-4">Không Tìm Thấy Trang</h2>
+      <p class="text-text-secondary mb-8 max-w-md mx-auto">
+        Trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/"
+          class="px-6 py-3 bg-primary-600 hover:bg-primary-700 rounded-lg font-semibold transition-colors"
+        >
+          Về Trang Chủ
+        </a>
+        <a
+          href="/phim"
+          class="px-6 py-3 bg-neutral-800 hover:bg-neutral-700 rounded-lg font-semibold transition-colors"
+        >
+          Xem Phim
+        </a>
+      </div>
+
+      <!-- Illustration -->
+      <svg
+        class="w-64 h-64 mx-auto mt-12 text-neutral-800"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        ></path>
+      </svg>
+    </div>
+  </div>
+</BaseLayout>

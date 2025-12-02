@@ -1,0 +1,108 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Chính Sách Bảo Mật - CineVerse"
+  description="Chính sách bảo mật thông tin người dùng CineVerse"
+>
+  <div class="container-custom py-12">
+    <h1 class="heading-2 mb-8">Chính Sách Bảo Mật</h1>
+
+    <div class="prose prose-invert max-w-4xl space-y-8">
+      <section>
+        <h2 class="heading-4 mb-4">1. Thu Thập Thông Tin</h2>
+        <p class="text-text-secondary mb-4">Chúng tôi thu thập các loại thông tin sau:</p>
+        <ul class="list-disc list-inside space-y-2 text-text-secondary">
+          <li>Thông tin cá nhân: họ tên, email, số điện thoại</li>
+          <li>Thông tin sử dụng: lịch sử xem phim, mục yêu thích</li>
+          <li>Thông tin kỹ thuật: địa chỉ IP, loại trình duyệt, thiết bị</li>
+          <li>Cookies và công nghệ tương tự</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="heading-4 mb-4">2. Sử Dụng Thông Tin</h2>
+        <p class="text-text-secondary mb-4">Thông tin được sử dụng để:</p>
+        <ul class="list-disc list-inside space-y-2 text-text-secondary">
+          <li>Cung cấp và cải thiện dịch vụ</li>
+          <li>Cá nhân hóa trải nghiệm người dùng</li>
+          <li>Gửi thông báo về dịch vụ và cập nhật</li>
+          <li>Phân tích và nghiên cứu thị trường</li>
+          <li>Bảo vệ an toàn và ngăn chặn gian lận</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="heading-4 mb-4">3. Chia Sẻ Thông Tin</h2>
+        <p class="text-text-secondary">
+          Chúng tôi không bán hoặc cho thuê thông tin cá nhân của bạn. Thông tin chỉ được chia sẻ
+          với:
+        </p>
+        <ul class="list-disc list-inside space-y-2 text-text-secondary mt-4">
+          <li>Đối tác cung cấp dịch vụ (với thỏa thuận bảo mật)</li>
+          <li>Cơ quan pháp luật (khi có yêu cầu hợp pháp)</li>
+          <li>Các bên liên quan trong trường hợp sáp nhập/mua lại</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="heading-4 mb-4">4. Bảo Mật Thông Tin</h2>
+        <p class="text-text-secondary">
+          Chúng tôi áp dụng các biện pháp bảo mật kỹ thuật và tổ chức phù hợp để bảo vệ thông tin cá
+          nhân khỏi truy cập, sử dụng hoặc tiết lộ trái phép. Tuy nhiên, không có phương thức truyền
+          tải qua Internet nào là hoàn toàn an toàn 100%.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="heading-4 mb-4">5. Cookies</h2>
+        <p class="text-text-secondary">
+          CineVerse sử dụng cookies để cải thiện trải nghiệm người dùng. Bạn có thể từ chối cookies
+          thông qua cài đặt trình duyệt, nhưng điều này có thể ảnh hưởng đến một số tính năng của
+          dịch vụ.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="heading-4 mb-4">6. Quyền Của Người Dùng</h2>
+        <p class="text-text-secondary mb-4">Bạn có quyền:</p>
+        <ul class="list-disc list-inside space-y-2 text-text-secondary">
+          <li>Truy cập và xem thông tin cá nhân của bạn</li>
+          <li>Yêu cầu sửa đổi hoặc xóa thông tin</li>
+          <li>Rút lại sự đồng ý xử lý dữ liệu</li>
+          <li>Khiếu nại với cơ quan quản lý</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="heading-4 mb-4">7. Thay Đổi Chính Sách</h2>
+        <p class="text-text-secondary">
+          Chúng tôi có thể cập nhật Chính Sách Bảo Mật này theo thời gian. Các thay đổi sẽ được
+          thông báo trên trang web với ngày cập nhật mới.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="heading-4 mb-4">8. Liên Hệ</h2>
+        <p class="text-text-secondary">
+          Nếu bạn có câu hỏi về Chính Sách Bảo Mật, vui lòng liên hệ:
+        </p>
+        <p class="text-text-secondary mt-4">
+          Email: <a
+            href="mailto:privacy@cineverse.com"
+            class="text-primary-500 hover:text-primary-400 underline">privacy@cineverse.com</a
+          ><br />
+          Hoặc qua trang <a
+            href="/lien-he"
+            class="text-primary-500 hover:text-primary-400 underline">Liên Hệ</a
+          >
+        </p>
+      </section>
+
+      <p class="text-sm text-text-muted mt-12">
+        Cập nhật lần cuối: {new Date().toLocaleDateString('vi-VN')}
+      </p>
+    </div>
+  </div>
+</MainLayout>

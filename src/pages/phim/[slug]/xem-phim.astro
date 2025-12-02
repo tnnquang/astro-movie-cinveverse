@@ -1,0 +1,228 @@
+---
+export const prerender = false;
+
+import MainLayout from '@/layouts/MainLayout.astro';
+import { filmService } from '@/lib/api/services/filmService';
+import { VideoPlayer } from '@/components/player/VideoPlayer';
+import { getImageUrl } from '@/lib/api/client';
+import { MovieCarousel } from '@/components/movie/MovieCarousel';
+import { Badge } from '@/components/ui/Badge';
+import { List, Info, Film as FilmIcon } from 'lucide-react';
+import type { Film, EpisodeServer, Episode } from '@/types/film';
+
+const { slug } = Astro.params;
+const url = new URL(Astro.request.url);
+const episodeSlug = url.searchParams.get('tap') || '';
+
+if (!slug) {
+  return Astro.redirect('/404');
+}
+
+let film: Film | null = null;
+let episodes: EpisodeServer[] = [];
+let currentEpisode: Episode | null = null;
+let relatedMovies: Film[] = [];
+
+try {
+  // Fetch film and episodes
+  const [filmData, episodesData] = await Promise.all([
+    filmService.getFilmBySlug(slug),
+    filmService.getFilmEpisodes(slug),
+  ]);
+
+  film = filmData;
+  episodes = episodesData || [];
+
+  // Find current episode
+  if (episodes.length > 0) {
+    const server = episodes[0];
+    if (episodeSlug) {
+      currentEpisode = server.server_data.find((ep) => ep.slug === episodeSlug) || null;
+    } else {
+      currentEpisode = server.server_data[0] || null;
+    }
+  }
+
+  // Fetch related movies if film exists and has categories
+  if (film && film.category && film.category.length > 0) {
+    try {
+      const relatedData = await filmService.getFilmsByCategory(film.category[0].slug);
+      relatedMovies = relatedData.data || [];
+      // Filter out current movie and limit to 12
+      relatedMovies = relatedMovies.filter((m) => m.slug !== slug).slice(0, 12);
+    } catch (err) {
+      console.error('Error fetching related movies:', err);
+    }
+  }
+} catch (e) {
+  console.error('Error fetching film:', e);
+}
+
+if (!film || !currentEpisode) {
+  return Astro.redirect(`/phim/${slug}`);
+}
+
+const posterUrl = getImageUrl(film.poster_url);
+---
+
+<MainLayout
+  title={`Xem ${film.name} - ${currentEpisode.name} - CineVerse`}
+  description={`Xem phim ${film.name} tập ${currentEpisode.name} chất lượng cao tại CineVerse`}
+>
+  <div class="min-h-screen bg-bg-primary">
+    <!-- Immersive Background -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+      <div class="absolute inset-0 bg-black/90"></div>
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-primary-900/10 via-transparent to-bg-primary/90"
+      >
+      </div>
+    </div>
+
+    <div class="relative z-10 pt-20 pb-12">
+      <div class="container-custom max-w-screen-2xl mx-auto">
+        <!-- Breadcrumb -->
+        <div class="mb-4 flex items-center gap-2 text-sm text-text-muted px-4 lg:px-0">
+          <a
+            href={`/phim/${slug}`}
+            class="hover:text-primary-400 transition-colors flex items-center gap-1"
+          >
+            <FilmIcon className="w-4 h-4" />
+            {film.name}
+          </a>
+          <span>/</span>
+          <span class="text-white font-medium">Tập {currentEpisode.name}</span>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+          <!-- Left Column: Player (3/4 width on desktop) -->
+          <div class="lg:col-span-3 space-y-4">
+            <div
+              class="relative aspect-video w-full rounded-xl overflow-hidden shadow-2xl border border-white/10 bg-black"
+            >
+              <VideoPlayer src={currentEpisode.link_m3u8} poster={posterUrl} client:load />
+            </div>
+
+            <!-- Mobile Info (Title only) -->
+            <div class="lg:hidden px-4">
+              <h1 class="text-xl font-bold text-white mb-1">{film.name}</h1>
+              <p class="text-sm text-text-muted">Tập {currentEpisode.name}</p>
+            </div>
+          </div>
+
+          <!-- Right Column: Episodes (1/4 width on desktop) -->
+          <div class="lg:col-span-1">
+            <div
+              class="glass rounded-xl border border-white/5 flex flex-col h-full max-h-[calc(100vh-120px)] lg:h-auto lg:max-h-[600px]"
+            >
+              <div
+                class="p-4 border-b border-white/10 flex items-center justify-between sticky top-0 bg-glass-bg backdrop-blur-xl z-10 rounded-t-xl"
+              >
+                <h3 class="font-bold text-white flex items-center gap-2">
+                  <List className="w-5 h-5 text-primary-500" />
+                  Danh sách tập
+                </h3>
+                <span class="text-xs text-text-muted bg-white/5 px-2 py-1 rounded-full">
+                  {episodes.reduce((acc, server) => acc + server.server_data.length, 0)} tập
+                </span>
+              </div>
+
+              <div class="overflow-y-auto custom-scrollbar p-4 flex-1">
+                {
+                  episodes.length > 0 ? (
+                    <div class="space-y-6">
+                      {episodes.map((server) => (
+                        <div>
+                          <p class="text-xs font-bold text-primary-300 uppercase tracking-wider mb-3 flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-primary-500" />
+                            {server.server_name}
+                          </p>
+                          <div class="grid grid-cols-4 lg:grid-cols-3 gap-2">
+                            {server.server_data.map((ep) => (
+                              <a
+                                href={`/phim/${slug}/xem-phim?tap=${ep.slug}`}
+                                class={`px-2 py-2 rounded-lg text-center text-sm font-medium transition-all duration-300 border ${
+                                  ep.slug === currentEpisode.slug
+                                    ? 'bg-primary-600 text-white border-primary-500 shadow-glow-primary/40'
+                                    : 'bg-white/5 text-text-secondary border-transparent hover:bg-white/10 hover:text-white hover:border-white/10'
+                                }`}
+                              >
+                                {ep.name}
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div class="text-center text-text-muted py-8">Chưa có tập phim nào.</div>
+                  )
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Section: Info & Related -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 px-4 lg:px-0">
+          <!-- Movie Info (2/3 width) -->
+          <div class="lg:col-span-2 space-y-8">
+            <!-- Info Card -->
+            <div class="glass rounded-2xl p-6 border border-white/5">
+              <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
+                <div>
+                  <h1
+                    class="heading-3 text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-400 mb-2"
+                  >
+                    {film.name}
+                  </h1>
+                  <h2 class="text-lg text-white/60 font-display">{film.origin_name}</h2>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                  <Badge variant="primary" className="px-3 py-1">Năm: {film.year}</Badge>
+                  <Badge variant="secondary" className="px-3 py-1">{film.quality}</Badge>
+                  <Badge variant="outline" className="px-3 py-1">{film.lang}</Badge>
+                </div>
+              </div>
+
+              <div
+                class="prose prose-invert max-w-none text-text-secondary leading-relaxed text-base border-t border-white/5 pt-6"
+              >
+                <h3 class="font-bold text-white mb-2 flex items-center gap-2 text-lg">
+                  <Info className="w-5 h-5 text-primary-500" />
+                  Nội dung
+                </h3>
+                <div set:html={film.content} />
+              </div>
+            </div>
+
+            <!-- Related Movies -->
+            {
+              relatedMovies.length > 0 && (
+                <div class="pt-4">
+                  <MovieCarousel
+                    title="Có thể bạn sẽ thích"
+                    movies={relatedMovies}
+                    client:visible
+                  />
+                </div>
+              )
+            }
+          </div>
+
+          <!-- Right Sidebar (Reserved for future widgets, e.g., Comments, Top Trending) -->
+          <div class="lg:col-span-1 space-y-6">
+            {/* Placeholder for future comments section or ads */}
+            <div
+              class="glass rounded-2xl p-6 border border-white/5 min-h-[200px] flex items-center justify-center text-text-muted"
+            >
+              <p>Khu vực bình luận (Đang phát triển)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>

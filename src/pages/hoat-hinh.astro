@@ -1,0 +1,107 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import { filmService } from '@/lib/api/services/filmService';
+import { MovieGrid } from '@/components/movie/MovieGrid';
+import { Pagination } from '@/components/ui/Pagination';
+import { Smile } from 'lucide-react';
+
+const url = new URL(Astro.request.url);
+const lastId = url.searchParams.get('lastId');
+const lastView = url.searchParams.get('lastView');
+const lastCreatedAt = url.searchParams.get('lastCreatedAt');
+const firstId = url.searchParams.get('firstId');
+const firstView = url.searchParams.get('firstView');
+const firstCreatedAt = url.searchParams.get('firstCreatedAt');
+
+let films = [];
+let nextCursor = null;
+let error = null;
+
+try {
+  const params = {
+    limit: 24,
+    ...(lastId && {
+      lastId,
+      lastView: Number(lastView),
+      lastCreatedAt: lastCreatedAt || undefined,
+    }),
+    ...(firstId && {
+      firstId,
+      firstView: Number(firstView),
+      firstCreatedAt: firstCreatedAt || undefined,
+    }),
+  };
+
+  const data = await filmService.getFilmsByType('hoathinh', params);
+  films = data.data || [];
+  nextCursor = data.nextCursor;
+} catch (e) {
+  error = e;
+  console.error('Error fetching films:', e);
+}
+
+const getNextLink = () => {
+  if (!nextCursor) return undefined;
+  const params = new URLSearchParams();
+  params.set('lastId', nextCursor.id);
+  params.set('lastView', nextCursor.view.toString());
+  params.set('lastCreatedAt', nextCursor.createdAt);
+  return `?${params.toString()}`;
+};
+
+const getPrevLink = () => {
+  if (lastId || firstId) return '/hoat-hinh';
+  return undefined;
+};
+---
+
+<MainLayout title="Hoạt Hình - CineVerse" description="Danh sách phim hoạt hình và anime mới nhất">
+  <div class="container-custom py-12">
+    <div class="relative mb-12 p-8 rounded-3xl overflow-hidden">
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-accent-900/40 to-primary-900/40 border border-white/5 backdrop-blur-xl"
+      >
+      </div>
+      <div class="absolute inset-0 bg-[url('/images/noise.png')] opacity-10 mix-blend-overlay">
+      </div>
+
+      <div class="relative z-10 flex flex-col items-center text-center">
+        <div
+          class="w-16 h-16 rounded-full bg-gradient-to-tr from-accent-500 to-primary-500 flex items-center justify-center mb-4 shadow-glow-accent"
+        >
+          <Smile className="w-8 h-8 text-white" />
+        </div>
+        <h1
+          class="heading-2 mb-3 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/80"
+        >
+          Hoạt Hình
+        </h1>
+        <p class="text-lg text-text-secondary max-w-2xl">
+          Thế giới anime và phim hoạt hình đầy màu sắc đang chờ đón bạn.
+        </p>
+      </div>
+    </div>
+
+    {
+      error ? (
+        <div class="text-center py-20 glass rounded-2xl border border-red-500/20 bg-red-500/5">
+          <p class="text-red-400 text-lg font-medium">
+            Không thể tải danh sách phim. Vui lòng thử lại sau.
+          </p>
+        </div>
+      ) : (
+        <>
+          <MovieGrid movies={films} client:only="react" />
+
+          <Pagination
+            hasPrevPage={!!(lastId || firstId)}
+            hasNextPage={!!nextCursor}
+            prevLink={getPrevLink()}
+            nextLink={getNextLink()}
+            className="mt-16"
+          />
+        </>
+      )
+    }
+  </div>
+</MainLayout>

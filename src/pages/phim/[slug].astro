@@ -1,0 +1,334 @@
+---
+export const prerender = false;
+
+import MainLayout from '@/layouts/MainLayout.astro';
+import { filmService } from '@/lib/api/services/filmService';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { getImageUrl } from '@/lib/api/client';
+import { Play, Calendar, Clock, Eye, Film as FilmIcon, Globe, User, Users } from 'lucide-react';
+
+import type { Film, EpisodeServer } from '@/types/film';
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/404');
+}
+
+let film: Film | null = null;
+let episodes: EpisodeServer[] = [];
+
+try {
+  const [filmData, episodesData] = await Promise.all([
+    filmService.getFilmBySlug(slug),
+    filmService.getFilmEpisodes(slug),
+  ]);
+
+  film = filmData;
+  episodes = episodesData || [];
+} catch (e) {
+  console.error('Error fetching film:', e);
+}
+
+if (!film) {
+  console.log(`Film not found for slug: ${slug}`);
+  return Astro.redirect('/404');
+}
+
+const backdropUrl = getImageUrl(film.thumb_url || film.poster_url, { width: 1280, quality: 90 });
+const posterUrl = getImageUrl(film.poster_url, { width: 400, quality: 90 });
+---
+
+<MainLayout
+  title={`${film.name} - CineVerse`}
+  description={film.content?.replace(/<[^>]*>/g, '').substring(0, 160)}
+  image={backdropUrl}
+  type="video.movie"
+>
+  <!-- Hero Background -->
+  <div class="fixed inset-0 h-[70vh] w-full -z-10">
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-transparent via-bg-primary/80 to-bg-primary z-10"
+    >
+    </div>
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-bg-primary via-bg-primary/40 to-transparent z-10"
+    >
+    </div>
+    <img src={backdropUrl} alt="" class="w-full h-full object-cover opacity-60" />
+  </div>
+
+  <div class="container-custom pt-32 pb-20 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-12">
+      <!-- Poster Column -->
+      <div class="hidden lg:block relative group">
+        <div
+          class="absolute inset-0 bg-gradient-to-tr from-primary-500/30 to-secondary-500/30 blur-2xl rounded-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+        >
+        </div>
+        <img
+          src={posterUrl}
+          alt={`Poster for ${film.name}`}
+          class="w-full rounded-2xl shadow-2xl relative z-10 transition-transform duration-500 group-hover:scale-[1.02] border border-white/10"
+        />
+
+        <div class="mt-6 flex flex-col gap-3">
+          <Button
+            as="a"
+            href={`/phim/${slug}/xem-phim`}
+            size="lg"
+            variant="primary"
+            className="w-full shadow-glow-primary justify-center py-6 text-lg"
+          >
+            <Play className="w-6 h-6 mr-2 fill-current" />
+            Xem Phim Ngay
+          </Button>
+        </div>
+      </div>
+
+      <!-- Content Column -->
+      <div class="space-y-8 min-w-0">
+        <!-- Title & Badges -->
+        <div>
+          <h1
+            class="heading-1 mb-2 text-transparent bg-clip-text bg-gradient-to-r from-white to-white/80 leading-tight"
+          >
+            {film.name}
+          </h1>
+          {
+            film.origin_name && film.origin_name !== film.name && (
+              <p class="text-2xl text-primary-200 font-display mb-6">{film.origin_name}</p>
+            )
+          }
+
+          <div class="flex flex-wrap gap-3 mb-6">
+            {
+              film.quality && (
+                <Badge variant="primary" className="text-sm px-3 py-1">
+                  {film.quality}
+                </Badge>
+              )
+            }
+            {
+              film.lang && (
+                <Badge variant="secondary" className="text-sm px-3 py-1">
+                  {film.lang}
+                </Badge>
+              )
+            }
+            {
+              film.type === 'series' && (
+                <Badge variant="default" className="text-sm px-3 py-1">
+                  Phim Bộ
+                </Badge>
+              )
+            }
+            {
+              film.type === 'single' && (
+                <Badge variant="success" className="text-sm px-3 py-1">
+                  Phim Lẻ
+                </Badge>
+              )
+            }
+            {
+              film.type === 'hoathinh' && (
+                <Badge variant="warning" className="text-sm px-3 py-1">
+                  Hoạt Hình
+                </Badge>
+              )
+            }
+            {
+              film.chipieurap && (
+                <Badge variant="error" className="text-sm px-3 py-1">
+                  Phim Chiếu Rạp
+                </Badge>
+              )
+            }
+          </div>
+
+          <!-- Mobile Poster & Button (Visible only on mobile) -->
+          <div class="lg:hidden mb-8 flex flex-col gap-6">
+            <img
+              src={posterUrl}
+              alt={`Poster for ${film.name}`}
+              class="w-2/3 mx-auto rounded-xl shadow-2xl border border-white/10"
+            />
+            <Button
+              as="a"
+              href={`/phim/${slug}/xem-phim`}
+              size="lg"
+              variant="primary"
+              className="w-full shadow-glow-primary justify-center py-4"
+            >
+              <Play className="w-5 h-5 mr-2 fill-current" />
+              Xem Phim Ngay
+            </Button>
+          </div>
+        </div>
+
+        <!-- Glass Stats Container -->
+        <div
+          class="glass rounded-2xl p-6 border border-white/5 grid grid-cols-2 md:grid-cols-4 gap-6"
+        >
+          {
+            film.year && (
+              <div class="flex flex-col gap-1">
+                <span class="text-text-muted text-xs uppercase tracking-wider flex items-center gap-1">
+                  <Calendar className="w-3 h-3" /> Năm phát hành
+                </span>
+                <span class="text-white font-semibold text-lg">{film.year}</span>
+              </div>
+            )
+          }
+          {
+            film.time && (
+              <div class="flex flex-col gap-1">
+                <span class="text-text-muted text-xs uppercase tracking-wider flex items-center gap-1">
+                  <Clock className="w-3 h-3" /> Thời lượng
+                </span>
+                <span class="text-white font-semibold text-lg">{film.time}</span>
+              </div>
+            )
+          }
+          {
+            film.episode_current && (
+              <div class="flex flex-col gap-1">
+                <span class="text-text-muted text-xs uppercase tracking-wider flex items-center gap-1">
+                  <FilmIcon className="w-3 h-3" /> Tập phim
+                </span>
+                <span class="text-white font-semibold text-lg">
+                  {film.episode_current} / {film.episode_total || '??'}
+                </span>
+              </div>
+            )
+          }
+          {
+            film.view && (
+              <div class="flex flex-col gap-1">
+                <span class="text-text-muted text-xs uppercase tracking-wider flex items-center gap-1">
+                  <Eye className="w-3 h-3" /> Lượt xem
+                </span>
+                <span class="text-white font-semibold text-lg">{film.view.toLocaleString()}</span>
+              </div>
+            )
+          }
+        </div>
+
+        <!-- Info Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Categories & Countries -->
+          <div class="space-y-6">
+            {
+              film.category && film.category.length > 0 && (
+                <div>
+                  <h3 class="font-semibold text-white mb-3 flex items-center gap-2">
+                    <FilmIcon className="w-4 h-4 text-primary-500" /> Thể loại
+                  </h3>
+                  <div class="flex flex-wrap gap-2">
+                    {film.category.map((cat) => (
+                      <a
+                        href={`/the-loai/${cat.slug}`}
+                        class="px-3 py-1.5 bg-white/5 hover:bg-primary-500/20 hover:text-primary-300 border border-white/5 rounded-lg transition-colors text-sm text-text-secondary"
+                      >
+                        {cat.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )
+            }
+
+            {
+              film.country && film.country.length > 0 && (
+                <div>
+                  <h3 class="font-semibold text-white mb-3 flex items-center gap-2">
+                    <Globe className="w-4 h-4 text-secondary-500" /> Quốc gia
+                  </h3>
+                  <div class="flex flex-wrap gap-2">
+                    {film.country.map((country) => (
+                      <a
+                        href={`/quoc-gia/${country.slug}`}
+                        class="px-3 py-1.5 bg-white/5 hover:bg-secondary-500/20 hover:text-secondary-300 border border-white/5 rounded-lg transition-colors text-sm text-text-secondary"
+                      >
+                        {country.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )
+            }
+          </div>
+
+          <!-- Cast & Crew -->
+          <div class="space-y-6">
+            {
+              film.director && film.director.length > 0 && (
+                <div>
+                  <h3 class="font-semibold text-white mb-3 flex items-center gap-2">
+                    <User className="w-4 h-4 text-accent-500" /> Đạo diễn
+                  </h3>
+                  <p class="text-text-secondary leading-relaxed">{film.director.join(', ')}</p>
+                </div>
+              )
+            }
+
+            {
+              film.actor && film.actor.length > 0 && (
+                <div>
+                  <h3 class="font-semibold text-white mb-3 flex items-center gap-2">
+                    <Users className="w-4 h-4 text-accent-500" /> Diễn viên
+                  </h3>
+                  <p class="text-text-secondary leading-relaxed">{film.actor.join(', ')}</p>
+                </div>
+              )
+            }
+          </div>
+        </div>
+
+        <!-- Description -->
+        {
+          film.content && (
+            <div class="glass rounded-2xl p-8 border border-white/5">
+              <h3 class="heading-4 mb-4 text-white">Nội dung phim</h3>
+              <div
+                class="text-text-secondary leading-relaxed text-lg prose prose-invert max-w-none"
+                set:html={film.content}
+              />
+            </div>
+          )
+        }
+
+        <!-- Episodes List -->
+        {
+          episodes.length > 0 && (
+            <div class="space-y-6">
+              <h3 class="heading-4 text-white border-l-4 border-primary-500 pl-4">
+                Danh sách tập phim
+              </h3>
+              <div class="space-y-6">
+                {episodes.map((server) => (
+                  <div class="bg-white/5 rounded-2xl p-6 border border-white/5">
+                    <h4 class="font-semibold mb-4 text-primary-300">{server.server_name}</h4>
+                    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+                      {server.server_data.map((ep) => (
+                        <a
+                          href={`/phim/${slug}/xem-phim?tap=${ep.slug}`}
+                          class="px-2 py-3 bg-black/40 hover:bg-primary-600 rounded-xl text-center transition-all focus-ring border border-white/5 hover:border-primary-500/50 hover:shadow-glow-primary/30 group"
+                        >
+                          <span class="text-sm font-medium text-text-secondary group-hover:text-white">
+                            {ep.name}
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</MainLayout>

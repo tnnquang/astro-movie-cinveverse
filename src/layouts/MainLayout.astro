@@ -1,0 +1,53 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import SEOHead from '@/components/common/SEOHead.astro';
+import { ReloadPrompt } from '@/components/pwa/ReloadPrompt';
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article' | 'video.movie' | 'video.tv_show';
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'Discover and watch your favorite movies and TV shows on CineVerse',
+  image,
+  type,
+  noindex,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description} image={image}>
+  <SEOHead
+    slot="head"
+    title={title}
+    description={description}
+    image={image}
+    type={type}
+    noindex={noindex}
+  />
+
+  <!-- Ambient Background -->
+  <div class="ambient-bg">
+    <div class="ambient-blob"></div>
+    <div class="ambient-blob"></div>
+    <div class="ambient-blob"></div>
+  </div>
+
+  <div class="flex flex-col min-h-screen relative z-10">
+    <Header />
+
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <ReloadPrompt client:only="react" />
+  </div>
+</BaseLayout>

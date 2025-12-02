@@ -1,0 +1,37 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import { filmService } from '@/lib/api/services/filmService';
+import { MovieGrid } from '@/components/movie/MovieGrid';
+
+import type { Film } from '@/types/film';
+
+let films: Film[] = [];
+let error = null;
+
+try {
+  const data = await filmService.getHotFilms(24);
+  films = data.data || [];
+} catch (e) {
+  error = e;
+  console.error('Error fetching films:', e);
+}
+---
+
+<MainLayout title="Xu Hướng - CineVerse" description="Phim đang thịnh hành">
+  <div class="container-custom py-12">
+    <div class="mb-8">
+      <h1 class="heading-2 mb-2">🔥 Xu Hướng</h1>
+      <p class="text-text-secondary">Những bộ phim đang được xem nhiều nhất</p>
+    </div>
+
+    {
+      error ? (
+        <div class="text-center py-12">
+          <p class="text-text-muted">Không thể tải danh sách phim. Vui lòng thử lại sau.</p>
+        </div>
+      ) : (
+        <MovieGrid movies={films} client:only="react" />
+      )
+    }
+  </div>
+</MainLayout>

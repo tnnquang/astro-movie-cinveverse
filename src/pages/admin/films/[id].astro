@@ -1,0 +1,129 @@
+---
+import AdminLayout from '@/layouts/AdminLayout.astro';
+
+const { id } = Astro.params;
+const isNew = id === 'new';
+const title = isNew ? 'Add New Film' : 'Edit Film';
+---
+
+<AdminLayout title={title}>
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-6 flex items-center gap-4">
+      <a
+        href="/admin/films"
+        class="p-2 rounded-xl hover:bg-white/5 text-text-secondary hover:text-white transition-colors"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+      </a>
+      <h1 class="text-2xl font-bold text-white">{title}</h1>
+    </div>
+
+    <form class="space-y-6">
+      <div class="glass p-6 rounded-2xl space-y-6">
+        <h2 class="text-lg font-bold text-white border-b border-glass-border pb-4">
+          Basic Information
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-text-secondary mb-2">Name</label>
+            <input
+              type="text"
+              class="w-full px-4 py-3 rounded-xl bg-neutral-900/50 border border-glass-border text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all"
+              placeholder="e.g. Inception"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-text-secondary mb-2">Original Name</label>
+            <input
+              type="text"
+              class="w-full px-4 py-3 rounded-xl bg-neutral-900/50 border border-glass-border text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all"
+              placeholder="e.g. Inception"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-text-secondary mb-2">Slug</label>
+            <input
+              type="text"
+              class="w-full px-4 py-3 rounded-xl bg-neutral-900/50 border border-glass-border text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all"
+              placeholder="inception"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-text-secondary mb-2">Year</label>
+            <input
+              type="number"
+              class="w-full px-4 py-3 rounded-xl bg-neutral-900/50 border border-glass-border text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all"
+              placeholder="2010"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-text-secondary mb-2">Status</label>
+            <select
+              class="w-full px-4 py-3 rounded-xl bg-neutral-900/50 border border-glass-border text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all"
+            >
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+              <option value="archived">Archived</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-text-secondary mb-2">Description</label>
+          <textarea
+            rows="4"
+            class="w-full px-4 py-3 rounded-xl bg-neutral-900/50 border border-glass-border text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all"
+            placeholder="Movie description..."></textarea>
+        </div>
+      </div>
+
+      <div class="glass p-6 rounded-2xl space-y-6">
+        <h2 class="text-lg font-bold text-white border-b border-glass-border pb-4">Media</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-text-secondary mb-2">Poster URL</label>
+            <input
+              type="text"
+              class="w-full px-4 py-3 rounded-xl bg-neutral-900/50 border border-glass-border text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all"
+              placeholder="https://..."
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-text-secondary mb-2">Thumbnail URL</label>
+            <input
+              type="text"
+              class="w-full px-4 py-3 rounded-xl bg-neutral-900/50 border border-glass-border text-white focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all"
+              placeholder="https://..."
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-4">
+        <a
+          href="/admin/films"
+          class="px-6 py-3 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white font-medium transition-colors"
+        >
+          Cancel
+        </a>
+        <button
+          type="submit"
+          class="px-6 py-3 rounded-xl bg-primary-600 hover:bg-primary-500 text-white font-bold shadow-lg shadow-primary-600/20 transition-all"
+        >
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</AdminLayout>

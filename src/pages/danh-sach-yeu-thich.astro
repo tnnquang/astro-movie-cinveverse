@@ -1,0 +1,59 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import { useStore } from '@nanostores/react';
+import { $watchlist } from '@/stores/watchlist';
+import { MovieGrid } from '@/components/movie/MovieGrid';
+
+// This page will be client-rendered to access watchlist
+---
+
+<MainLayout title="Danh Sách Yêu Thích - CineVerse">
+  <div class="container-custom py-12">
+    <h1 class="heading-2 mb-8">Danh Sách Yêu Thích</h1>
+
+    <div id="watchlist-content" class="min-h-[400px]">
+      <p class="text-text-secondary">Đang tải...</p>
+    </div>
+  </div>
+</MainLayout>
+
+<script>
+  import { $watchlist } from '@/stores/watchlist';
+
+  const container = document.getElementById('watchlist-content');
+  if (container) {
+    const items = $watchlist.get();
+
+    if (items.length === 0) {
+      container.innerHTML = `
+        <div class="text-center py-12">
+          <svg class="mx-auto h-16 w-16 text-text-muted mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+          <h3 class="text-lg font-semibold mb-2">Chưa có phim yêu thích</h3>
+          <p class="text-text-muted">Thêm phim vào danh sách để xem sau</p>
+        </div>
+      `;
+    } else {
+      // Convert watchlist items to film format for MovieGrid (will need client-side rendering)
+      container.innerHTML = `
+        <div class="movie-grid">
+          ${items
+            .map(
+              (item) => `
+            <a href="/phim/${item.slug}" class="group">
+              <div class="bg-neutral-900 rounded-xl overflow-hidden hover:scale-105 transition-transform">
+                <img src="${item.poster_url}" alt="${item.name}" class="w-full aspect-[2/3] object-cover" />
+                <div class="p-4">
+                  <h3 class="font-semibold line-clamp-2">${item.name}</h3>
+                </div>
+              </div>
+            </a>
+          `
+            )
+            .join('')}
+        </div>
+      `;
+    }
+  }
+</script>
