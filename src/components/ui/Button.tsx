@@ -9,6 +9,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   iconPosition?: 'left' | 'right';
   as?: 'button' | 'a';
   href?: string;
+  'aria-label'?: string;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -24,6 +25,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       as: Component = 'button',
       href,
+      'aria-label': ariaLabel,
       ...props
     },
     ref
@@ -83,6 +85,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           ref={ref as any}
           href={href}
           className={cn(baseStyles, variants[variant], sizes[size], className)}
+          aria-label={ariaLabel}
           {...(props as any)}
         >
           {content}
@@ -95,6 +98,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={cn(baseStyles, variants[variant], sizes[size], className)}
         disabled={disabled || isLoading}
+        aria-label={ariaLabel}
         {...props}
       >
         {content}

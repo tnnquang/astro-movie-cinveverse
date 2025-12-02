@@ -31,7 +31,10 @@ export const MovieCard: React.FC<MovieCardProps> = ({
       )}
     >
       {/* Liquid Border Effect */}
-      <div className="absolute inset-0 p-[1px] rounded-2xl bg-gradient-to-br from-white/10 to-white/0 group-hover:from-primary-500/50 group-hover:to-secondary-500/50 transition-colors duration-500 z-20 pointer-events-none"></div>
+      <div
+        className="absolute inset-0 p-[1px] rounded-2xl bg-gradient-to-br from-white/10 to-white/0 group-hover:from-primary-500/50 group-hover:to-secondary-500/50 transition-colors duration-500 z-20 pointer-events-none"
+        aria-hidden="true"
+      ></div>
 
       {/* Full Background Image */}
       <a
@@ -46,7 +49,10 @@ export const MovieCard: React.FC<MovieCardProps> = ({
           loading="lazy"
         />
         {/* Vivid Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"
+          aria-hidden="true"
+        />
       </a>
 
       {/* Hover Overlay - Content & Actions */}

@@ -18,8 +18,8 @@ test.describe('Accessibility', () => {
     test('movie detail page should not have any automatically detectable accessibility issues', async ({ page }) => {
         // Go to a movie detail page (assuming one exists, e.g., first one from homepage)
         await page.goto('/');
-        await page.waitForSelector('.movie-card');
-        const firstMovieLink = await page.getAttribute('.movie-card a', 'href');
+        await page.waitForSelector('a[href^="/phim/"]');
+        const firstMovieLink = await page.getAttribute('a[href^="/phim/"]', 'href');
 
         if (firstMovieLink) {
             await page.goto(firstMovieLink);

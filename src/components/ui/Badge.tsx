@@ -17,11 +17,11 @@ export const Badge: React.FC<BadgeProps> = ({
 
   const variants = {
     default: 'bg-neutral-800 text-neutral-300',
-    primary: 'bg-primary-600 text-white',
+    primary: 'bg-primary-700 text-white',
     secondary: 'bg-secondary-600 text-neutral-950',
-    success: 'bg-green-600 text-white',
+    success: 'bg-green-700 text-white',
     warning: 'bg-yellow-600 text-neutral-950',
-    error: 'bg-red-600 text-white',
+    error: 'bg-red-700 text-white',
     outline: 'border border-neutral-700 text-neutral-300 bg-transparent',
   };
 

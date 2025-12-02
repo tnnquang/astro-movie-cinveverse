@@ -65,6 +65,8 @@ export interface FilterFilmsDto {
     categories?: string[];
     types?: ('series' | 'single' | 'hoathinh')[];
     isCinema?: boolean;
+    year?: number;
+    sort?: string;
     lastCursor?: PaginationCursor;
     firstCursor?: PaginationCursor;
     limit?: number;

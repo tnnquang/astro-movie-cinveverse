@@ -1,0 +1,464 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e7]:
+    - banner:
+      - generic [ref=e8]:
+        - link "CineVerse Home" [ref=e9] [cursor=pointer]:
+          - /url: /
+          - img [ref=e12]
+          - generic [ref=e15]: CineVerse
+        - navigation "Main navigation" [ref=e16]:
+          - link "Phim" [ref=e17] [cursor=pointer]:
+            - /url: /phim
+            - text: Phim
+          - link "Phim Lẻ" [ref=e19] [cursor=pointer]:
+            - /url: /phim-le
+          - link "Phim Bộ" [ref=e20] [cursor=pointer]:
+            - /url: /phim-bo
+          - link "Hoạt Hình" [ref=e21] [cursor=pointer]:
+            - /url: /hoat-hinh
+          - button "Thể Loại" [ref=e23] [cursor=pointer]:
+            - text: Thể Loại
+            - img [ref=e24]
+          - button "Quốc Gia" [ref=e27] [cursor=pointer]:
+            - text: Quốc Gia
+            - img [ref=e28]
+        - generic [ref=e30]:
+          - button "Search movies" [ref=e32] [cursor=pointer]:
+            - img [ref=e33]
+          - button "Switch to light theme" [ref=e38] [cursor=pointer]:
+            - img [ref=e39]
+          - link "My watchlist" [ref=e41] [cursor=pointer]:
+            - /url: /danh-sach-yeu-thich
+            - img [ref=e42]
+    - main [ref=e44]:
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - link "Ẩn Danh 2" [ref=e49] [cursor=pointer]:
+            - /url: /phim/an-danh-2
+            - img [ref=e50]
+            - text: Ẩn Danh 2
+          - generic [ref=e52]: /
+          - generic [ref=e53]: Tập 1
+        - generic [ref=e54]:
+          - generic [ref=e58]:
+            - button "Play" [ref=e60] [cursor=pointer]:
+              - img [ref=e61]
+            - generic [ref=e63]:
+              - slider "Seek video" [ref=e65] [cursor=pointer]: "0"
+              - generic [ref=e66]:
+                - generic [ref=e67]:
+                  - button "Play" [ref=e68] [cursor=pointer]:
+                    - img [ref=e69]
+                  - generic [ref=e71]: 0:00 / 70:18
+                - generic [ref=e72]:
+                  - button "Mute" [ref=e73] [cursor=pointer]:
+                    - img [ref=e74]
+                  - button "Fullscreen" [ref=e76] [cursor=pointer]:
+                    - img [ref=e77]
+          - generic [ref=e80]:
+            - generic [ref=e81]:
+              - heading "Danh sách tập" [level=3] [ref=e82]:
+                - img [ref=e83]
+                - text: Danh sách tập
+              - generic [ref=e84]: 32 tập
+            - generic [ref=e86]:
+              - generic [ref=e87]:
+                - paragraph [ref=e88]: "Vietsub #1"
+                - generic [ref=e90]:
+                  - link "1" [ref=e91] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=1
+                  - link "2" [ref=e92] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=2
+                  - link "3" [ref=e93] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=3
+                  - link "4" [ref=e94] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=4
+                  - link "5" [ref=e95] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=5
+                  - link "6" [ref=e96] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=6
+                  - link "7" [ref=e97] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=7
+                  - link "8" [ref=e98] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=8
+                  - link "9" [ref=e99] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=9
+                  - link "10" [ref=e100] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=10
+                  - link "11" [ref=e101] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=11
+                  - link "12" [ref=e102] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=12
+                  - link "13" [ref=e103] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=13
+                  - link "14" [ref=e104] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=14
+                  - link "15" [ref=e105] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=15
+                  - link "16" [ref=e106] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=16
+              - generic [ref=e107]:
+                - paragraph [ref=e108]: "Thuyết Minh #1"
+                - generic [ref=e110]:
+                  - link "1" [ref=e111] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=1
+                  - link "2" [ref=e112] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=2
+                  - link "3" [ref=e113] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=3
+                  - link "4" [ref=e114] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=4
+                  - link "5" [ref=e115] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=5
+                  - link "6" [ref=e116] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=6
+                  - link "7" [ref=e117] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=7
+                  - link "8" [ref=e118] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=8
+                  - link "9" [ref=e119] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=9
+                  - link "10" [ref=e120] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=10
+                  - link "11" [ref=e121] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=11
+                  - link "12" [ref=e122] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=12
+                  - link "13" [ref=e123] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=13
+                  - link "14" [ref=e124] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=14
+                  - link "15" [ref=e125] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=15
+                  - link "16" [ref=e126] [cursor=pointer]:
+                    - /url: /phim/an-danh-2/xem-phim?tap=16
+        - generic [ref=e127]:
+          - generic [ref=e128]:
+            - generic [ref=e129]:
+              - generic [ref=e130]:
+                - generic [ref=e131]:
+                  - heading "Ẩn Danh 2" [level=1] [ref=e132]
+                  - heading "Taxi Driver 2" [level=2] [ref=e133]
+                - generic [ref=e134]:
+                  - generic [ref=e135]: "Năm: 2023"
+                  - generic [ref=e136]: FHD
+                  - generic [ref=e137]: Vietsub + Thuyết Minh
+              - generic [ref=e138]:
+                - heading "Nội dung" [level=3] [ref=e139]:
+                  - img [ref=e140]
+                  - text: Nội dung
+                - paragraph [ref=e143]: Chuyển thể từ webtoon nổi tiếng Red Cage, Ẩn danh (Taxi Driver) là một trong các tác phẩm ăn khách của màn ảnh nhỏ Hàn Quốc năm 2021. Phim xoay quanh một hãng taxi bí ẩn mang tên Rainbow Taxi (Taxi Cầu Vồng). Vẻ ngoài là dịch vụ vận chuyển, đây thực chất là một đội ngũ thực thi công lý, mang mục tiêu thay các khách hàng trả thù khi họ không giành được công bằng trước pháp luật.
+            - region [ref=e146]:
+              - heading "Có thể bạn sẽ thích" [level=2] [ref=e148]
+              - generic [ref=e149]:
+                - generic [ref=e151]:
+                  - generic [ref=e153]:
+                    - link "View details for Mouse Kẻ Săn Người" [ref=e154] [cursor=pointer]:
+                      - /url: /phim/mouse-ke-san-nguoi
+                      - img "Mouse Kẻ Săn Người" [ref=e158]
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                      - generic:
+                        - link "Mouse Kẻ Săn Người" [ref=e160] [cursor=pointer]:
+                          - /url: /phim/mouse-ke-san-nguoi
+                          - heading "Mouse Kẻ Săn Người" [level=3] [ref=e161]
+                        - generic:
+                          - generic: Mouse
+                          - generic: "2021"
+                  - generic [ref=e163]:
+                    - link "View details for Nhất Niệm Quan Sơn" [ref=e164] [cursor=pointer]:
+                      - /url: /phim/nhat-niem-quan-son
+                      - img "Nhất Niệm Quan Sơn" [ref=e168]
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                      - generic:
+                        - link "Nhất Niệm Quan Sơn" [ref=e170] [cursor=pointer]:
+                          - /url: /phim/nhat-niem-quan-son
+                          - heading "Nhất Niệm Quan Sơn" [level=3] [ref=e171]
+                        - generic:
+                          - generic: A Journey to Love
+                          - generic: "2023"
+                  - generic [ref=e173]:
+                    - link "View details for Đội Thiếu Niên Siêu Đẳng" [ref=e174] [cursor=pointer]:
+                      - /url: /phim/doi-thieu-nien-sieu-dang
+                      - img "Đội Thiếu Niên Siêu Đẳng" [ref=e178]
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                      - generic:
+                        - link "Đội Thiếu Niên Siêu Đẳng" [ref=e180] [cursor=pointer]:
+                          - /url: /phim/doi-thieu-nien-sieu-dang
+                          - heading "Đội Thiếu Niên Siêu Đẳng" [level=3] [ref=e181]
+                        - generic:
+                          - generic: Moving
+                          - generic: "2023"
+                  - generic [ref=e183]:
+                    - link "View details for Tội Ác Kinh Hoàng" [ref=e184] [cursor=pointer]:
+                      - /url: /phim/toi-ac-kinh-hoang-2023
+                      - generic [ref=e185]:
+                        - img "Tội Ác Kinh Hoàng"
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                      - generic:
+                        - link "Tội Ác Kinh Hoàng" [ref=e189] [cursor=pointer]:
+                          - /url: /phim/toi-ac-kinh-hoang-2023
+                          - heading "Tội Ác Kinh Hoàng" [level=3] [ref=e190]
+                        - generic:
+                          - generic: The Worst of Evil
+                          - generic: "2023"
+                  - generic [ref=e192]:
+                    - link "View details for Danh Sách Đen (Phần 9)" [ref=e193] [cursor=pointer]:
+                      - /url: /phim/danh-sach-den-phan-9
+                      - generic [ref=e194]:
+                        - img "Danh Sách Đen (Phần 9)"
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                      - generic:
+                        - link "Danh Sách Đen (Phần 9)" [ref=e198] [cursor=pointer]:
+                          - /url: /phim/danh-sach-den-phan-9
+                          - heading "Danh Sách Đen (Phần 9)" [level=3] [ref=e199]
+                        - generic:
+                          - generic: The Blacklist (Season 9)
+                          - generic: "2022"
+                  - generic [ref=e201]:
+                    - link "View details for Đảo Hải Tặc" [ref=e202] [cursor=pointer]:
+                      - /url: /phim/one-piece
+                      - generic [ref=e203]:
+                        - img "Đảo Hải Tặc"
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                      - generic:
+                        - link "Đảo Hải Tặc" [ref=e207] [cursor=pointer]:
+                          - /url: /phim/one-piece
+                          - heading "Đảo Hải Tặc" [level=3] [ref=e208]
+                        - generic:
+                          - generic: One Piece (Luffy)
+                          - generic: "1999"
+                  - generic [ref=e210]:
+                    - link "View details for Good Boy" [ref=e211] [cursor=pointer]:
+                      - /url: /phim/good-boy
+                      - generic [ref=e212]:
+                        - img "Good Boy"
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                      - generic:
+                        - link "Good Boy" [ref=e216] [cursor=pointer]:
+                          - /url: /phim/good-boy
+                          - heading "Good Boy" [level=3] [ref=e217]
+                        - generic:
+                          - generic: Good Boy
+                          - generic: "2025"
+                  - generic [ref=e219]:
+                    - link "View details for Deadpool và Wolverine" [ref=e220] [cursor=pointer]:
+                      - /url: /phim/deadpool-va-wolverine
+                      - generic [ref=e221]:
+                        - img "Deadpool và Wolverine"
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                      - generic:
+                        - link "Deadpool và Wolverine" [ref=e225] [cursor=pointer]:
+                          - /url: /phim/deadpool-va-wolverine
+                          - heading "Deadpool và Wolverine" [level=3] [ref=e226]
+                        - generic:
+                          - generic: Deadpool & Wolverine
+                          - generic: "2024"
+                  - generic [ref=e228]:
+                    - link "View details for Cửa Hàng Sát Thủ" [ref=e229] [cursor=pointer]:
+                      - /url: /phim/cua-hang-sat-thu
+                      - generic [ref=e230]:
+                        - img "Cửa Hàng Sát Thủ"
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                      - generic:
+                        - link "Cửa Hàng Sát Thủ" [ref=e234] [cursor=pointer]:
+                          - /url: /phim/cua-hang-sat-thu
+                          - heading "Cửa Hàng Sát Thủ" [level=3] [ref=e235]
+                        - generic:
+                          - generic: A Shop for Killers
+                          - generic: "2024"
+                  - generic [ref=e237]:
+                    - link "View details for Khói Lửa Nhân Gian Của Tôi" [ref=e238] [cursor=pointer]:
+                      - /url: /phim/khoi-lua-nhan-gian-cua-toi
+                      - generic [ref=e239]:
+                        - img "Khói Lửa Nhân Gian Của Tôi"
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                      - generic:
+                        - link "Khói Lửa Nhân Gian Của Tôi" [ref=e243] [cursor=pointer]:
+                          - /url: /phim/khoi-lua-nhan-gian-cua-toi
+                          - heading "Khói Lửa Nhân Gian Của Tôi" [level=3] [ref=e244]
+                        - generic:
+                          - generic: Fireworks of My Heart
+                          - generic: "2023"
+                  - generic [ref=e246]:
+                    - 'link "View details for Godzilla x Kong: Đế Chế Mới" [ref=e247] [cursor=pointer]':
+                      - /url: /phim/godzilla-x-kong-de-che-moi
+                      - generic [ref=e248]:
+                        - 'img "Godzilla x Kong: Đế Chế Mới"'
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                      - generic:
+                        - 'link "Godzilla x Kong: Đế Chế Mới" [ref=e252] [cursor=pointer]':
+                          - /url: /phim/godzilla-x-kong-de-che-moi
+                          - 'heading "Godzilla x Kong: Đế Chế Mới" [level=3] [ref=e253]'
+                        - generic:
+                          - generic: "Godzilla x Kong: The New Empire"
+                          - generic: "2024"
+                  - generic [ref=e255]:
+                    - link "View details for Black Adam" [ref=e256] [cursor=pointer]:
+                      - /url: /phim/black-adam
+                      - generic [ref=e257]:
+                        - img "Black Adam"
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+                      - generic:
+                        - link "Black Adam" [ref=e261] [cursor=pointer]:
+                          - /url: /phim/black-adam
+                          - heading "Black Adam" [level=3] [ref=e262]
+                        - generic:
+                          - generic: Black Adam
+                          - generic: "2022"
+                - button "Previous slide" [ref=e263] [cursor=pointer]:
+                  - img [ref=e264]
+                - button "Next slide" [ref=e266] [cursor=pointer]:
+                  - img [ref=e267]
+          - paragraph [ref=e271]: Khu vực bình luận (Đang phát triển)
+    - contentinfo [ref=e272]:
+      - generic [ref=e273]:
+        - generic [ref=e274]:
+          - generic [ref=e275]:
+            - link "CineVerse" [ref=e276] [cursor=pointer]:
+              - /url: /
+              - img [ref=e279]
+              - generic [ref=e282]: CineVerse
+            - paragraph [ref=e283]: Khám phá thế giới điện ảnh vô tận với trải nghiệm xem phim đỉnh cao. Hàng ngàn bộ phim bom tấn đang chờ đón bạn.
+          - generic [ref=e284]:
+            - heading "Khám Phá" [level=3] [ref=e285]
+            - list [ref=e286]:
+              - listitem [ref=e287]:
+                - link "Tất Cả Phim" [ref=e288] [cursor=pointer]:
+                  - /url: /phim
+                  - text: Tất Cả Phim
+              - listitem [ref=e290]:
+                - link "Phim Lẻ" [ref=e291] [cursor=pointer]:
+                  - /url: /phim-le
+                  - text: Phim Lẻ
+              - listitem [ref=e293]:
+                - link "Phim Bộ" [ref=e294] [cursor=pointer]:
+                  - /url: /phim-bo
+                  - text: Phim Bộ
+              - listitem [ref=e296]:
+                - link "Hoạt Hình" [ref=e297] [cursor=pointer]:
+                  - /url: /hoat-hinh
+                  - text: Hoạt Hình
+              - listitem [ref=e299]:
+                - link "Phim Chiếu Rạp" [ref=e300] [cursor=pointer]:
+                  - /url: /phim-chieu-rap
+                  - text: Phim Chiếu Rạp
+          - generic [ref=e302]:
+            - heading "Danh Mục" [level=3] [ref=e303]
+            - list [ref=e304]:
+              - listitem [ref=e305]:
+                - link "Thể Loại" [ref=e306] [cursor=pointer]:
+                  - /url: /the-loai
+                  - text: Thể Loại
+              - listitem [ref=e308]:
+                - link "Quốc Gia" [ref=e309] [cursor=pointer]:
+                  - /url: /quoc-gia
+                  - text: Quốc Gia
+              - listitem [ref=e311]:
+                - link "Xu Hướng" [ref=e312] [cursor=pointer]:
+                  - /url: /xu-huong
+                  - text: Xu Hướng
+          - generic [ref=e314]:
+            - heading "Tài Khoản" [level=3] [ref=e315]
+            - list [ref=e316]:
+              - listitem [ref=e317]:
+                - link "Danh Sách Yêu Thích" [ref=e318] [cursor=pointer]:
+                  - /url: /danh-sach-yeu-thich
+                  - text: Danh Sách Yêu Thích
+              - listitem [ref=e320]:
+                - link "Lịch Sử Xem" [ref=e321] [cursor=pointer]:
+                  - /url: /lich-su-xem
+                  - text: Lịch Sử Xem
+              - listitem [ref=e323]:
+                - link "Cài Đặt" [ref=e324] [cursor=pointer]:
+                  - /url: /cai-dat
+                  - text: Cài Đặt
+          - generic [ref=e326]:
+            - heading "Công Ty" [level=3] [ref=e327]
+            - list [ref=e328]:
+              - listitem [ref=e329]:
+                - link "Giới Thiệu" [ref=e330] [cursor=pointer]:
+                  - /url: /gioi-thieu
+                  - text: Giới Thiệu
+              - listitem [ref=e332]:
+                - link "Liên Hệ" [ref=e333] [cursor=pointer]:
+                  - /url: /lien-he
+                  - text: Liên Hệ
+              - listitem [ref=e335]:
+                - link "Hỗ Trợ" [ref=e336] [cursor=pointer]:
+                  - /url: /ho-tro
+                  - text: Hỗ Trợ
+              - listitem [ref=e338]:
+                - link "Điều Khoản" [ref=e339] [cursor=pointer]:
+                  - /url: /dieu-khoan
+                  - text: Điều Khoản
+              - listitem [ref=e341]:
+                - link "Chính Sách Bảo Mật" [ref=e342] [cursor=pointer]:
+                  - /url: /chinh-sach-bao-mat
+                  - text: Chính Sách Bảo Mật
+        - generic [ref=e344]:
+          - paragraph [ref=e345]: © 2025 CineVerse. All rights reserved.
+          - generic [ref=e346]:
+            - link "Facebook" [ref=e347] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e348]
+            - link "Twitter" [ref=e350] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e351]
+            - link "YouTube" [ref=e353] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e354]
+  - generic [ref=e358]:
+    - button "Menu" [ref=e359]:
+      - img [ref=e361]
+      - generic: Menu
+    - button "Inspect" [ref=e365]:
+      - img [ref=e367]
+      - generic: Inspect
+    - button "Audit" [ref=e369]:
+      - img [ref=e371]
+      - generic: Audit
+    - button "Settings" [ref=e374]:
+      - img [ref=e376]
+      - generic: Settings
+```
